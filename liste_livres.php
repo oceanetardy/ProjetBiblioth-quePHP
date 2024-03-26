@@ -16,9 +16,9 @@ class Livre
         $this->connection = $connection;
     }
 
-    public function getAllLivres()
+    public function getListeLivres()
     {
-        $query = "SELECT titre, auteur, annee_publication FROM livres";
+        $query = "SELECT id, titre, auteur, annee_publication FROM livres";
         $statement = $this->connection->prepare($query);
         $statement->execute();
 
@@ -27,26 +27,44 @@ class Livre
 }
 
 $livre = new Livre($connection);
-
-// Récupérer tous les livres de la base de données
-$livres = $livre->getAllLivres();
-
+$liste_livres = $livre->getListeLivres();
 ?>
 
-<h1>Liste de tous les livres</h1>
+<!DOCTYPE html>
+<html lang="en">
 
-<?php if (count($livres) > 0) : ?>
-    <ul>
-        <?php foreach ($livres as $livre) : ?>
-            <li><?php echo $livre['titre']; ?> par <?php echo $livre['auteur']; ?> (<?php echo $livre['annee_publication']; ?>)</li>
-        <?php endforeach; ?>
-    </ul>
-<?php else : ?>
-    <p>Aucun livre trouvé.</p>
-<?php endif; ?>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liste des Livres</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
 
-<a href="ajouter.php" class="button">Ajouter un livre</a>
-<a href="index.php" class="button">Retour à l'accueil</a>
-<a href="login.php?action=logout" class="button">Déconnexion</a>
+<body>
+<h1>Liste des Livres</h1>
+
+<table>
+    <thead>
+    <tr>
+        <th>Titre</th>
+        <th>Auteur</th>
+        <th>Année de publication</th>
+    </tr>
+    </thead>
+    <tbody>
+    <?php foreach ($liste_livres as $livre) : ?>
+        <tr>
+            <td><a href="details_livre.php?id=<?php echo $livre['id']; ?>"><?php echo $livre['titre']; ?></a></td>
+            <td><?php echo $livre['auteur']; ?></td>
+            <td><?php echo $livre['annee_publication']; ?></td>
+        </tr>
+    <?php endforeach; ?>
+    </tbody>
+</table>
+
+<a href="index.php" class="button">Retour</a>
 
 <!-- Reste du contenu de la page -->
+</body>
+
+</html>
