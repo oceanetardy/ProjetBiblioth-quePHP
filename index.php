@@ -1,109 +1,52 @@
 <?php
 session_start();
-if (!isset($_SESSION['utilisateur_id'])) {
-    header('Location: login.php');
-    exit();
+
+if (isset($_SESSION['utilisateur_id'])) {
+    // L'utilisateur est connecté
+    require_once 'config.php';
+    require_once 'models/Utilisateur.php';
+
+    $utilisateur = new Utilisateur($connection);
+    $utilisateurConnecte = $utilisateur->getUtilisateurById($_SESSION['utilisateur_id']);
 }
 
-require_once 'config.php';
-
-class Utilisateur
-{
-    private $connection;
-
-    public function __construct($connection)
-    {
-        $this->connection = $connection;
-    }
-
-    public function getUtilisateur($utilisateurId)
-    {
-        $query = "SELECT nom_utilisateur, email FROM utilisateurs WHERE id = :utilisateurId";
-        $statement = $this->connection->prepare($query);
-        $statement->bindParam(':utilisateurId', $utilisateurId, PDO::PARAM_INT);
-        $statement->execute();
-
-        return $statement->fetch();
-    }
-}
-
-class Livre
-{
-    private $connection;
-
-    public function __construct($connection)
-    {
-        $this->connection = $connection;
-    }
-
-    public function rechercherLivres($searchTerm)
-    {
-        $query = "SELECT titre, auteur, annee_publication FROM livres WHERE titre LIKE :searchTerm OR auteur LIKE :searchTerm";
-        $statement = $this->connection->prepare($query);
-        $searchTerm = '%' . $searchTerm . '%';
-        $statement->bindParam(':searchTerm', $searchTerm, PDO::PARAM_STR);
-        $statement->execute();
-
-        return $statement->fetchAll();
-    }
-}
-
-$utilisateur = new Utilisateur($connection);
-
-// Récupérer l'ID de l'utilisateur connecté
-$utilisateur_id = $_SESSION['utilisateur_id'];
-
-// Récupérer les informations de l'utilisateur connecté
-$infos_utilisateur = $utilisateur->getUtilisateur($utilisateur_id);
-
-// Message de bienvenue
-$message_bienvenue = 'Bienvenue, ' . $infos_utilisateur['nom_utilisateur'] . '!';
-
-// Traitement du formulaire de recherche
-$livres = [];
-if (isset($_GET['search'])) {
-    $searchTerm = $_GET['search'];
-    $livre = new Livre($connection);
-    $livres = $livre->rechercherLivres($searchTerm);
-}
 ?>
-
 <!DOCTYPE html>
-<html lang="en">
-
+<html>
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Accueil</title>
+    <title>Bibliothèque</title>
     <link rel="stylesheet" href="styles.css">
+
 </head>
-
 <body>
-<h1>Accueil</h1>
-<p><?php echo $message_bienvenue; ?></p>
+<h1>Bibliothèque 2.0</h1>
+<div>
+    <p>Bienvenue sur cette bibliothèque 2.0</p>
+    <p>Connectez-vous ou inscrivez vous pour avoir accès à toutes les fonctionnalités.</p>
+    <p>Ajouter vos livres dans votre bibliothèque et parcourez les livres des autres utilisateurs.</p>
+    <p>Donnez votre avis sur les livres que vous avez lus!</p>
+    <img src="medias/img.png" width="300" height="200">
+</div>
 
-<form method="GET" action="index.php">
-    <input type="text" name="search" placeholder="Rechercher par titre ou auteur...">
-    <button type="submit">Rechercher</button>
-</form>
 
-<?php if (count($livres) > 0) : ?>
-    <h2>Résultats de la recherche :</h2>
-    <ul>
-        <?php foreach ($livres as $livre) : ?>
-            <li><?php echo $livre['titre']; ?> par <?php echo $livre['auteur']; ?> (<?php echo $livre['annee_publication']; ?>)</li>
-        <?php endforeach; ?>
-    </ul>
-<?php elseif (isset($_GET['search'])) : ?>
-    <p>Aucun livre trouvé pour cette recherche.</p>
+<?php if (isset($utilisateurConnecte)) : ?>
+    <div>
+        <p>Bienvenue, <?php echo $utilisateurConnecte['nom_utilisateur']; ?>!</p>
+        <p>Email: <?php echo $utilisateurConnecte['email']; ?></p>
+        <a href="logout.php" class="button">Déconnexion</a>
+        <a href="views/liste_livres_utilisateurs.php" class="button">Mes Livres</a>
+        <a href="views/liste_livres.php" class="button">Tous les livres</a>
+        <a href="recherche_livres.php" class="button">Chercher un livre</a>
+
+
+    </div>
+<?php else : ?>
+<div>
+    <a href="login.php" class="button">Se connecter</a>
+    <a href="inscription.php" class="button">S'inscrire</a>
+</div>
+
 <?php endif; ?>
-
-<a href="ajouter.php" class="button">Ajouter un livre</a>
-<a href="liste_livres_utilisateur.php" class="button">Voir mes livres</a>
-<a href="liste_livres.php" class="button">Voir tous les livres</a>
-<a href="logout.php" class="button">Déconnexion</a>
-
-<!-- Reste du contenu de la page -->
 </body>
-
 </html>

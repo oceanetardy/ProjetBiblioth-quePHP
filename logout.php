@@ -1,6 +1,11 @@
 <?php
 session_start();
+
+// Déconnexion de l'utilisateur
+session_unset();
 session_destroy();
-header('Location: login.php');
+
+// Redirection vers la page d'accueil
+header('Location: index.php');
 exit();
 ?>
