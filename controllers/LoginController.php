@@ -15,10 +15,19 @@ class LoginController {
 
         if ($utilisateur && password_verify($mot_de_passe, $utilisateur['mot_de_passe'])) {
             $_SESSION['utilisateur_id'] = $utilisateur['id'];
+            $_SESSION['message'] = [
+                'type' => 'success',
+                'text' => 'Connexion réussie!'
+            ];
             header('Location: index.php');
             exit();
         } else {
-            $viewData['message_erreur'] = 'Email ou mot de passe incorrect.';
+            $_SESSION['message'] = [
+                'type' => 'error',
+                'text' => 'Email ou mot de passe incorrect.'
+            ];
+            header('Location: login.php');
+            exit();
         }
     }
 
