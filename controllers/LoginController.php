@@ -1,16 +1,19 @@
 <?php
 require_once 'models/Utilisateur.php';
 
-class LoginController {
+class LoginController
+{
     private $connection;
     private $utilisateur;
 
-    public function __construct($connection) {
+    public function __construct($connection)
+    {
         $this->connection = $connection;
         $this->utilisateur = new Utilisateur($connection);
     }
 
-    public function handleLogin($email, $mot_de_passe) {
+    public function handleLogin($email, $mot_de_passe)
+    {
         $utilisateur = $this->utilisateur->getUtilisateurByEmail($email);
 
         if ($utilisateur && password_verify($mot_de_passe, $utilisateur['mot_de_passe'])) {
@@ -31,7 +34,8 @@ class LoginController {
         }
     }
 
-    public function getViewData() {
+    public function getViewData()
+    {
         return [];
     }
 }

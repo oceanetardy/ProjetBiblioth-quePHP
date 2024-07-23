@@ -1,3 +1,4 @@
+/* Styles globaux pour le corps du document */
 body {
     font-family: Arial, sans-serif;
     margin: 0;
@@ -9,6 +10,7 @@ body {
     min-height: 100vh;
 }
 
+/* Styles pour l'en-tête */
 header {
     background-color: #4b2e17;
     color: white;
@@ -29,22 +31,29 @@ header h1 {
     gap: 10px;
 }
 
+/* Styles pour la zone principale */
 main {
     padding: 20px;
-    max-width: 800px;
+    max-width: 1000px;
     margin: auto;
     flex: 1;
 }
 
-.welcome-section, .user-info {
+/* Styles pour les sections avec arrière-plan blanc */
+.welcome-section,
+.user-info {
     background: white;
     padding: 30px;
-    margin-bottom: 20px;
+    margin: 20px auto;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     text-align: center;
+    max-width: 800px;
+    width: 100%;
+    box-sizing: border-box;
 }
 
+/* Styles pour les images dans la section de bienvenue */
 .welcome-section img {
     display: block;
     margin: 20px auto;
@@ -52,6 +61,7 @@ main {
     height: auto;
 }
 
+/* Styles pour les groupes de boutons */
 .button-group {
     display: flex;
     justify-content: space-around;
@@ -64,6 +74,7 @@ main {
     margin: 2px;
 }
 
+/* Styles pour les boutons */
 .button {
     background-color: #8B4513;
     color: white;
@@ -79,6 +90,7 @@ main {
     background-color: #A0522D;
 }
 
+/* Styles pour le pied de page */
 footer {
     text-align: center;
     padding: 2px 0; /* Réduction du padding pour rendre le footer plus petit */
@@ -90,6 +102,83 @@ footer {
     width: 100%;
 }
 
+/* Styles pour les messages */
+.message {
+    padding: 10px;
+    margin-bottom: 15px;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.message.success {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+.message.error {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+/* Styles pour les formulaires dans les cartes */
+.welcome-section form,
+.user-info form {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centre horizontalement les éléments */
+    gap: 15px; /* Espace entre les éléments du formulaire */
+    max-width: 100%; /* S'assurer que le formulaire ne dépasse pas la largeur de la carte */
+    margin: 0 auto; /* Centrer le formulaire dans la carte */
+}
+
+/* Styles pour les labels et les champs de saisie */
+.welcome-section label,
+.user-info label {
+    margin-bottom: 5px;
+    font-weight: bold;
+    text-align: left;
+    display: block; /* Assure que les labels sont des blocs pour occuper toute la largeur disponible */
+    width: 100%;
+}
+
+/* Styles pour les champs de saisie */
+.welcome-section input[type="text"],
+.welcome-section input[type="email"],
+.welcome-section input[type="password"],
+.user-info input[type="text"],
+.user-info input[type="email"],
+.user-info input[type="password"] {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1em;
+    width: 100%; /* Assure que les champs prennent toute la largeur disponible */
+    max-width: 400px; /* Largeur maximale des champs pour une meilleure apparence */
+    box-sizing: border-box; /* Assure que les bordures et les padding sont inclus dans la largeur totale */
+}
+
+/* Styles pour le bouton de soumission */
+.welcome-section button,
+.user-info button {
+    padding: 10px 20px;
+    background-color: #8B4513;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+    transition: background-color 0.3s ease;
+    margin-top: 10px; /* Espace au-dessus du bouton */
+}
+
+.welcome-section button:hover,
+.user-info button:hover {
+    background-color: #A0522D;
+}
+
+/* Styles pour les vues responsives */
 @media (max-width: 600px) {
     header {
         flex-direction: column;
@@ -103,5 +192,12 @@ footer {
     .button-group {
         flex-direction: column;
         gap: 10px;
+    }
+
+    .welcome-section,
+    .user-info {
+        max-width: 100%;
+        width: calc(100% - 20px); /* Ajuster la largeur pour petits écrans */
+        margin: 10px; /* Réduire la marge pour petits écrans */
     }
 }

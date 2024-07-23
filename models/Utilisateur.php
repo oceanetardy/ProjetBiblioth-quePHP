@@ -9,15 +9,15 @@ class Utilisateur
         $this->connection = $connection;
     }
 
-    public function getUtilisateurById($utilisateurId)
-    {
+    public function getUtilisateurById($utilisateurId) {
         $query = "SELECT id, nom_utilisateur, email FROM utilisateurs WHERE id = :utilisateurId";
         $statement = $this->connection->prepare($query);
         $statement->bindParam(':utilisateurId', $utilisateurId, PDO::PARAM_INT);
         $statement->execute();
-
-        return $statement->fetch();
-    }
+    
+        // Utilisation de PDO::FETCH_ASSOC pour obtenir un tableau associatif
+        return $statement->fetch(PDO::FETCH_ASSOC);
+    }       
 
     public function getUtilisateurByEmail($email)
     {

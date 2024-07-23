@@ -1,10 +1,11 @@
 <?php
 session_start();
+require_once 'config.php';
+require_once 'models/Utilisateur.php';
+
+$utilisateurConnecte = null;
 
 if (isset($_SESSION['utilisateur_id'])) {
-    require_once 'config.php';
-    require_once 'models/Utilisateur.php';
-
     $utilisateur = new Utilisateur($connection);
     $utilisateurConnecte = $utilisateur->getUtilisateurById($_SESSION['utilisateur_id']);
 }
@@ -20,7 +21,7 @@ if (isset($_SESSION['utilisateur_id'])) {
     <?php include 'header.php'; ?>
 
     <main>
-        <?php if (isset($utilisateurConnecte)) : ?>
+        <?php if ($utilisateurConnecte) : ?>
             <section class="user-info">
                 <p>Bienvenue, <?php echo htmlspecialchars($utilisateurConnecte['nom_utilisateur']); ?>!</p>
                 <p>Email: <?php echo htmlspecialchars($utilisateurConnecte['email']); ?></p>

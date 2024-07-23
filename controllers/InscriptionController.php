@@ -1,28 +1,43 @@
 <?php
 require_once 'models/Utilisateur.php';
 
-class InscriptionController {
+class InscriptionController
+{
     private $connection;
     private $utilisateur;
 
-    public function __construct($connection) {
+    public function __construct($connection)
+    {
         $this->connection = $connection;
         $this->utilisateur = new Utilisateur($connection);
     }
 
-    public function handleInscription($nom_utilisateur, $email, $mot_de_passe) {
+    public function handleInscription($nom_utilisateur, $email, $mot_de_passe)
+    {
         $utilisateurExist = $this->utilisateur->getUtilisateurByEmail($email);
 
         if ($utilisateurExist) {
-            $viewData['message_erreur'] = 'Cet email est déjà utilisé.';
+            $_SESSION['message'] = [
+                'type' => 'error',
+                'text' => 'Cet email est déjà utilisé.'
+            ];
+            header('Location: inscription.php');
+            exit();
         } else {
-            $this->utilisateur->enregistrerUtilisateur($nom_utilisateur, $email, $mot_de_passe);
-            header('Location: index.php');
+            $hashed_password = password_hash($mot_de_passe, PASSWORD_DEFAULT);
+            $this->utilisateur->enregistrerUtilisateur($nom_utilisateur, $email, $hashed_password);
+
+            $_SESSION['message'] = [
+                'type' => 'success',
+                'text' => 'Votre compte a été créé avec succès !'
+            ];
+            header('Location: inscription.php');
             exit();
         }
     }
 
-    public function getViewData() {
+    public function getViewData()
+    {
         return [];
     }
 }

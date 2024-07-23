@@ -29,6 +29,6 @@
 </html>
 
 
-<a href="/gestionlivre" class="button">Retour</a>
+<a href="index.php" class="button">Retour</a>
 </body>
 </html>
