@@ -1,6 +1,6 @@
 <?php
-require_once './models/Livre.php';
-require_once './models/Auteur.php';
+require_once '../models/Livre.php';
+require_once '../models/Auteur.php';
 
 class AjouterLivreController {
     private $connection;
@@ -15,7 +15,7 @@ class AjouterLivreController {
 
     public function handleAjouterLivre($titre, $nomAuteur, $prenomAuteur, $annee_publication, $description, $utilisateurId) {
         if (empty($nomAuteur) || empty($prenomAuteur)) {
-            $viewData['message_erreur'] = 'Veuillez saisir le nom et le prénom de l\'auteur.';
+            $_SESSION['message_erreur'] = 'Veuillez saisir le nom et le prénom de l\'auteur.';
             return;
         }
 
@@ -34,11 +34,11 @@ class AjouterLivreController {
         $ajoutLivre = $this->livre->ajouterLivre($titre, $auteurId, $annee_publication, $description, $utilisateurId);
 
         if ($ajoutLivre) {
-            // Redirection vers la liste des livres après l'ajout réussi
-            header('Location: index.php');
+            $_SESSION['message_succes'] = 'Livre ajouté avec succès!';
+            header('Location: ajouter_livre.php');
             exit();
         } else {
-            $viewData['message_erreur'] = 'Erreur lors de l\'ajout du livre.';
+            $_SESSION['message_erreur'] = 'Erreur lors de l\'ajout du livre.';
         }
     }
 
