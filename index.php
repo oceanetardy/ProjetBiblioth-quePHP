@@ -12,18 +12,21 @@ if (isset($_SESSION['utilisateur_id'])) {
 ?>
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <title>BOOKNET</title>
     <link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
     <?php include 'header.php'; ?>
 
     <main>
         <?php if ($utilisateurConnecte) : ?>
             <section class="user-info">
-                <p>Bienvenue, <?php echo htmlspecialchars($utilisateurConnecte['nom_utilisateur']); ?>!</p>
+                <?php $utilisateurConnecte = $utilisateur->getUtilisateurById($_SESSION['utilisateur_id']); ?>
+                <p>Bienvenue, <?php echo htmlspecialchars($utilisateurConnecte['nom_utilisateur']); ?> !</p>
                 <p>Email: <?php echo htmlspecialchars($utilisateurConnecte['email']); ?></p>
                 <div class="button-group">
                     <a href="views/liste_livres.php" class="button">Tous les livres</a>
@@ -43,4 +46,5 @@ if (isset($_SESSION['utilisateur_id'])) {
 
     <?php include 'footer.php'; ?>
 </body>
+
 </html>
