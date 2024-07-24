@@ -14,30 +14,47 @@ $livre = new Livre($connection);
 $listeLivres = $livre->getAllLivres();
 ?>
 <!DOCTYPE html>
-<html>
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Tous les Livres</title>
+    <title>Tout les livres</title>
     <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="styles_tableau.css">
 </head>
 <body>
-<h1>Tous les livres</h1>
-<table>
-    <tr>
-        <th>Titre</th>
-        <th>Auteur</th>
-        <th>Description</th>
-    </tr>
-    <?php foreach ($listeLivres as $livre) : ?>
-        <tr>
-            <td><a href="../details_livre.php?livreId=<?php echo $livre['id']; ?>"><?php echo $livre['titre']; ?></a></td>
-            <td><?php echo $livre['nom'] . ' ' . $livre['prenom']; ?></td>
-            <td><?php echo $livre['description']; ?></td>
-        </tr>
-    <?php endforeach; ?>
+    <?php include '../header.php'; ?>
 
-</table>
-<a href="/gestionlivre" class="button">Retour</a>
+    <main>
+        <div class="container">
+            <h1>Tous les livres</h1>
 
+            <table>
+                <thead>
+                    <tr>
+                        <th>Titre</th>
+                        <th>Auteur</th>
+                        <th>Description</th>
+                        <th>Année de Publication</th> 
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach ($listeLivres as $livre) : ?>
+                        <tr>
+                            <td><a href="../details_livre.php?livreId=<?php echo htmlspecialchars($livre['id']); ?>"><?php echo htmlspecialchars($livre['titre']); ?></a></td>
+                            <td><?php echo htmlspecialchars($livre['nom_auteur']) . ' ' . htmlspecialchars($livre['prenom_auteur']); ?></td>
+                            <td><?php echo htmlspecialchars($livre['description']); ?></td>
+                            <td><?php echo htmlspecialchars($livre['annee_publication']); ?></td> 
+                        </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+
+            <div class="button-group">
+                <a href="../index.php" class="button">Retour</a>
+            </div>
+        </div>
+    </main>
+
+    <?php include '../footer.php'; ?>
 </body>
 </html>

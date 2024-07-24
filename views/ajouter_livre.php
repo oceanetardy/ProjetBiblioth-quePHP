@@ -42,29 +42,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <title>Ajouter un livre</title>
     <link rel="stylesheet" href="../styles.css">
     <link rel="stylesheet" href="styles_tableau.css">
-    <style>
-        /* Styles pour les alertes */
-        .alert {
-            padding: 15px;
-            margin-bottom: 20px;
-            border-radius: 5px;
-            font-size: 1em;
-            opacity: 1;
-            transition: opacity 0.5s ease-out;
-        }
 
-        .alert.success {
-            background-color: #d4edda;
-            color: #155724;
-            border: 1px solid #c3e6cb;
-        }
-
-        .alert.error {
-            background-color: #f8d7da;
-            color: #721c24;
-            border: 1px solid #f5c6cb;
-        }
-    </style>
 </head>
 
 <body>
