@@ -44,7 +44,7 @@ if (isset($_SESSION['utilisateur_id'])) {
         <?php endif; ?>
     </main>
 
-    <?php include 'footer.php'; ?>
+    <?php include 'views/footer.php'; ?>
 </body>
 
 </html>

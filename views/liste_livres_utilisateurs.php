@@ -55,6 +55,6 @@ $listeLivres = $livre->getLivresUtilisateur($_SESSION['utilisateur_id']);
         </div>
     </main>
 
-    <?php include '../footer.php'; ?>
+    <?php include 'footer.php'; ?>
 </body>
 </html>

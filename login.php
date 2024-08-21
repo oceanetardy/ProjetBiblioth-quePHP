@@ -43,6 +43,6 @@ unset($_SESSION['message']);
         </section>
     </main>
 
-    <?php include 'footer.php'; ?>
+    <?php include 'views/footer.php'; ?>
 </body>
 </html>

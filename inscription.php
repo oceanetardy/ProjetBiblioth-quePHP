@@ -58,6 +58,6 @@ unset($_SESSION['message']);
             }
         });
     </script>
-    <?php include 'footer.php'; ?>
+    <?php include 'views/footer.php'; ?>
 </body>
 </html>
