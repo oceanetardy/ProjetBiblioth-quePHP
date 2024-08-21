@@ -24,3 +24,8 @@ GESTION SUPPRESSION : Si l'on supprime un livre, il faudra supprimer les comment
 
 Rajouter la gestion de catégories
 
+
+Afficher message si inscription OK
+
+Image 
+
