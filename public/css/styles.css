@@ -10,6 +10,15 @@ body {
     min-height: 100vh;
 }
 
+/* Conteneur principal */
+.container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
 /* Styles pour l'en-tête */
 header {
     background-color: #4b2e17;
@@ -41,7 +50,9 @@ main {
 
 /* Styles pour les sections avec arrière-plan blanc */
 .welcome-section,
-.user-info {
+.user-info,
+.search-section,
+.card {
     background: white;
     padding: 30px;
     margin: 20px auto;
@@ -64,7 +75,7 @@ main {
 /* Styles pour les groupes de boutons */
 .button-group {
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
     margin-top: 20px;
     flex-wrap: wrap;
 }
@@ -84,16 +95,50 @@ main {
     transition: background-color 0.3s ease;
     border: none;
     cursor: pointer;
+    text-align: center;
+    display: inline-block;
 }
 
 .button:hover {
     background-color: #A0522D;
 }
 
+/* Styles pour les tableaux */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+}
+
+table th,
+table td {
+    padding: 15px;
+    border: 1px solid #ddd;
+    text-align: left;
+}
+
+table th {
+    background-color: #4b2e17;
+    color: white;
+}
+
+table tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+table a {
+    color: #4b2e17;
+    text-decoration: none;
+}
+
+table a:hover {
+    text-decoration: underline;
+}
+
 /* Styles pour le pied de page */
 footer {
     text-align: center;
-    padding: 2px 0; /* Réduction du padding pour rendre le footer plus petit */
+    padding: 2px 0;
     background-color: #4b2e17;
     color: white;
     font-size: 0.8em;
@@ -103,20 +148,23 @@ footer {
 }
 
 /* Styles pour les messages */
-.message {
+.message,
+.alert {
     padding: 10px;
     margin-bottom: 15px;
     border-radius: 5px;
     text-align: center;
 }
 
-.message.success {
+.message.success,
+.alert.success {
     background-color: #d4edda;
     color: #155724;
     border: 1px solid #c3e6cb;
 }
 
-.message.error {
+.message.error,
+.alert.error {
     background-color: #f8d7da;
     color: #721c24;
     border: 1px solid #f5c6cb;
@@ -124,44 +172,48 @@ footer {
 
 /* Styles pour les formulaires dans les cartes */
 .welcome-section form,
-.user-info form {
+.user-info form,
+.card form {
     display: flex;
     flex-direction: column;
-    align-items: center; /* Centre horizontalement les éléments */
-    gap: 15px; /* Espace entre les éléments du formulaire */
-    max-width: 100%; /* S'assurer que le formulaire ne dépasse pas la largeur de la carte */
-    margin: 0 auto; /* Centrer le formulaire dans la carte */
+    align-items: center;
+    gap: 15px;
+    max-width: 100%;
+    margin: 0 auto;
 }
 
 /* Styles pour les labels et les champs de saisie */
 .welcome-section label,
-.user-info label {
+.user-info label,
+.card label {
     margin-bottom: 5px;
     font-weight: bold;
     text-align: left;
-    display: block; /* Assure que les labels sont des blocs pour occuper toute la largeur disponible */
+    display: block;
     width: 100%;
 }
 
-/* Styles pour les champs de saisie */
 .welcome-section input[type="text"],
 .welcome-section input[type="email"],
 .welcome-section input[type="password"],
 .user-info input[type="text"],
 .user-info input[type="email"],
-.user-info input[type="password"] {
+.user-info input[type="password"],
+.card input[type="text"],
+.card textarea {
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
     font-size: 1em;
-    width: 100%; /* Assure que les champs prennent toute la largeur disponible */
-    max-width: 400px; /* Largeur maximale des champs pour une meilleure apparence */
-    box-sizing: border-box; /* Assure que les bordures et les padding sont inclus dans la largeur totale */
+    width: 100%;
+    max-width: 400px;
+    box-sizing: border-box;
 }
 
 /* Styles pour le bouton de soumission */
 .welcome-section button,
-.user-info button {
+.user-info button,
+.card button {
     padding: 10px 20px;
     background-color: #8B4513;
     color: white;
@@ -170,11 +222,12 @@ footer {
     cursor: pointer;
     font-size: 1em;
     transition: background-color 0.3s ease;
-    margin-top: 10px; /* Espace au-dessus du bouton */
+    margin-top: 10px;
 }
 
 .welcome-section button:hover,
-.user-info button:hover {
+.user-info button:hover,
+.card button:hover {
     background-color: #A0522D;
 }
 
@@ -195,10 +248,10 @@ footer {
     }
 
     .welcome-section,
-    .user-info {
+    .user-info,
+    .card {
         max-width: 100%;
-        width: calc(100% - 20px); /* Ajuster la largeur pour petits écrans */
-        margin: 10px; /* Réduire la marge pour petits écrans */
+        width: calc(100% - 20px);
+        margin: 10px;
     }
 }
-

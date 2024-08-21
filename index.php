@@ -16,7 +16,7 @@ if (isset($_SESSION['utilisateur_id'])) {
 <head>
     <meta charset="UTF-8">
     <title>BOOKNET</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="public/css/styles.css">
 </head>
 
 <body>

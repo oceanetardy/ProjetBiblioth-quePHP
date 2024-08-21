@@ -40,8 +40,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
     <meta charset="UTF-8">
     <title>Ajouter un livre</title>
-    <link rel="stylesheet" href="../styles.css">
-    <link rel="stylesheet" href="styles_tableau.css">
+    <link rel="stylesheet" href="../public/css/styles.css">
+
 
 </head>
 

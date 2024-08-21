@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Détails du Livre</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="../public/css/styles.css">
 </head>
 <body>
 <?php if (isset($livre)) : ?>
@@ -32,7 +32,7 @@
     <p>Aucun livre trouvé.</p>
 <?php endif; ?>
 
-<a href="/gestionlivre" class="button">Retour</a>
+<a href="/ProjetBibliothequePHP" class="button">Retour</a>
 
 </body>
 </html>

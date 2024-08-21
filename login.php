@@ -17,7 +17,7 @@ unset($_SESSION['message']);
 <head>
     <meta charset="UTF-8">
     <title>Login - BOOKNET</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="public/css/styles.css">
 </head>
 <body>
     <?php include 'header.php'; ?>
