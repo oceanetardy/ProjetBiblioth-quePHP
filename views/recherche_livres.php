@@ -11,8 +11,8 @@
 
 <main>
     <!-- Formulaire de recherche -->
-    <h1>Rechercher un livre ou un auteur</h1>
     <section class="search-section card">
+        <h1>Rechercher un livre ou un auteur</h1>
         <form method="POST" action="recherche_livres.php">
             <input type="text" name="recherche" placeholder="Rechercher par titre ou auteur" required>
             <button type="submit">Rechercher</button>
