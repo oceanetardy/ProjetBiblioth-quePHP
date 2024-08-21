@@ -22,7 +22,7 @@ $estSurPageAddLivres = ($pageActuelle === 'ajouter_livre.php');
 
             <!-- Affichez le lien "Mes Livres" ou "Ajouter un Livre" selon la page actuelle -->
             <?php if ($estSurPageAddLivres) : ?>
-                <a href="views/liste_livres_utilisateurs.php" class="button">Mes livres</a>
+                <a href="liste_livres_utilisateurs.php" class="button">Mes livres</a>
             <?php else : ?>
                 <a href="views/liste_livres_utilisateurs.php" class="button" <?php if ($estSurPageMesLivres) echo 'style="display:none;"'; ?>>Mes Livres</a>
             <?php endif; ?>
