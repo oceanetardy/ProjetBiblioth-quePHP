@@ -8,6 +8,7 @@ $utilisateurConnecte = null;
 if (isset($_SESSION['utilisateur_id'])) {
     $utilisateur = new Utilisateur($connection);
     $utilisateurConnecte = $utilisateur->getUtilisateurById($_SESSION['utilisateur_id']);
+    $utilisateurRole = $_SESSION['role'];
 }
 ?>
 <!DOCTYPE html>
@@ -28,6 +29,7 @@ if (isset($_SESSION['utilisateur_id'])) {
                 <?php $utilisateurConnecte = $utilisateur->getUtilisateurById($_SESSION['utilisateur_id']); ?>
                 <p>Bienvenue, <?php echo htmlspecialchars($utilisateurConnecte['nom_utilisateur']); ?> !</p>
                 <p>Email: <?php echo htmlspecialchars($utilisateurConnecte['email']); ?></p>
+                <p>Email: <?php echo htmlspecialchars($utilisateurRole); ?></p>
                 <div class="button-group">
                     <a href="views/liste_livres.php" class="button">Tous les livres</a>
                     <a href="recherche_livres.php" class="button">Chercher un livre</a>

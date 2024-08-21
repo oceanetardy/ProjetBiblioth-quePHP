@@ -18,6 +18,7 @@ class LoginController
 
         if ($utilisateur && password_verify($mot_de_passe, $utilisateur['mot_de_passe'])) {
             $_SESSION['utilisateur_id'] = $utilisateur['id'];
+            $_SESSION['role'] = $utilisateur['role'];
             $_SESSION['message'] = [
                 'type' => 'success',
                 'text' => 'Connexion réussie!'

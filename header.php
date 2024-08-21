@@ -1,7 +1,7 @@
 <?php
-
 // Vérifiez si l'utilisateur est connecté
 $utilisateurConnecte = isset($_SESSION['utilisateur_id']);
+$estAdmin = isset($_SESSION['role']) && $_SESSION['role'] === 'admin';
 
 // Déterminez si nous sommes sur la page "Mes Livres" ou "Ajouter un Livre"
 $pageActuelle = basename($_SERVER['PHP_SELF']);
@@ -14,14 +14,17 @@ $estSurPageAddLivres = ($pageActuelle === 'ajouter_livre.php');
     <div class="auth-buttons">
         <?php if ($utilisateurConnecte) : ?>
             <a href="logout.php" class="button">Déconnexion</a>
-            
+
+            <!-- Affichez le lien "Tous les Commentaires" si l'utilisateur est administrateur -->
+            <?php if ($estAdmin) : ?>
+                <a href="gestion_commentaire.php?action=liste" class="button">Tous les Commentaires</a>
+            <?php endif; ?>
+
             <!-- Affichez le lien "Mes Livres" ou "Ajouter un Livre" selon la page actuelle -->
             <?php if ($estSurPageAddLivres) : ?>
-                <!-- Si vous êtes sur la page d'ajout de livre, le lien "Mes Livres" est affiché avec un autre texte ou une autre URL -->
                 <a href="liste_livres_utilisateurs.php" class="button">Mes livres</a>
             <?php else : ?>
-                <!-- Sinon, afficher le lien habituel vers "Mes Livres" -->
-                <a href="views/liste_livres_utilisateurs.php" class="button" <?php if ($estSurPageMesLivres) echo 'style="display:none;"'; ?>>Mes Livres</a>
+                <a href="liste_livres_utilisateurs.php" class="button" <?php if ($estSurPageMesLivres) echo 'style="display:none;"'; ?>>Mes Livres</a>
             <?php endif; ?>
 
         <?php else : ?>

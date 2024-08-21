@@ -12,8 +12,9 @@ class InscriptionController
         $this->utilisateur = new Utilisateur($connection);
     }
 
-    public function handleInscription($nom_utilisateur, $email, $mot_de_passe)
+    public function inscrire($nom_utilisateur, $email, $mot_de_passe)
     {
+        // Vérifiez si l'email existe déjà
         $utilisateurExist = $this->utilisateur->getUtilisateurByEmail($email);
 
         if ($utilisateurExist) {
@@ -24,14 +25,25 @@ class InscriptionController
             header('Location: inscription.php');
             exit();
         } else {
-            $hashed_password = password_hash($mot_de_passe, PASSWORD_DEFAULT);
-            $this->utilisateur->enregistrerUtilisateur($nom_utilisateur, $email, $hashed_password);
+            // Définir le rôle par défaut à 'user'
+            $role = 'user';
 
-            $_SESSION['message'] = [
-                'type' => 'success',
-                'text' => 'Votre compte a été créé avec succès !'
-            ];
-            header('Location: inscription.php');
+            // Enregistrez l'utilisateur avec mot de passe haché et rôle par défaut
+            $enregistrementReussi = $this->utilisateur->enregistrerUtilisateur($nom_utilisateur, $email, $mot_de_passe, $role);
+
+            if ($enregistrementReussi) {
+                $_SESSION['message'] = [
+                    'type' => 'success',
+                    'text' => 'Votre compte a été créé avec succès !'
+                ];
+                header('Location: login.php'); // Redirection vers la page de connexion
+            } else {
+                $_SESSION['message'] = [
+                    'type' => 'error',
+                    'text' => 'Une erreur est survenue lors de l\'inscription. Veuillez réessayer.'
+                ];
+                header('Location: inscription.php');
+            }
             exit();
         }
     }
@@ -41,3 +53,4 @@ class InscriptionController
         return [];
     }
 }
+?>
