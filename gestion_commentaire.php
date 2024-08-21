@@ -21,14 +21,10 @@ switch ($action) {
         break;
 
     case 'modifier':
-        if ($_SERVER['REQUEST_METHOD'] === 'POST' && $id) {
+        if ($id) {
             $controller->modifier($id);
-        } else {
-            $commentaire = Commentaire::fetchAll($connection, $livre_id);
-            include 'views/modifier_commentaire.php';
         }
         break;
-
     case 'supprimer':
         if ($_SERVER['REQUEST_METHOD'] === 'GET' && $id) {
             $controller->supprimer($id);

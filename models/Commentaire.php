@@ -30,9 +30,10 @@ class Commentaire {
     }
 
     public function delete() {
-        $query = "DELETE FROM commentaires WHERE id = ?";
+        $query = "DELETE FROM commentaires WHERE id = :id";
         $statement = $this->connection->prepare($query);
-        $statement->execute([$this->id]);
+        $statement->bindParam(':id', $this->id, PDO::PARAM_INT);
+        return $statement->execute();
     }
 
     public static function fetchAll($connection, $livre_id) {
@@ -41,5 +42,14 @@ class Commentaire {
         $statement->execute([$livre_id]);
         return $statement->fetchAll(PDO::FETCH_CLASS, 'Commentaire');
     }
+
+
+    public static function fetchById($connection, $id) {
+        $query = "SELECT * FROM commentaires WHERE id = ?";
+        $statement = $connection->prepare($query);
+        $statement->execute([$id]);
+        return $statement->fetch(PDO::FETCH_ASSOC); // Retourne un tableau associatif
+    }
+
 }
 ?>

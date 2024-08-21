@@ -33,25 +33,49 @@ class CommentaireController {
 
     public function modifier($id) {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $contenu = $_POST['contenu'];
-            $livre_id = $_POST['livre_id'];
+            $contenu = isset($_POST['contenu']) ? $_POST['contenu'] : '';
+            $livre_id = isset($_POST['livre_id']) ? intval($_POST['livre_id']) : null;
+
+            if (empty($contenu)) {
+                $_SESSION['message'] = [
+                    'type' => 'error',
+                    'text' => 'Le contenu du commentaire ne peut pas être vide.'
+                ];
+                header("Location: gestion_commentaire.php?action=modifier&id=$id");
+                exit();
+            }
 
             $commentaireObj = new Commentaire($this->connection, $id, null, null, $contenu);
             $commentaireObj->update();
-            header("Location: details_livre.php?id=$livre_id");
-            exit(); // Assurez-vous que le script se termine après la redirection
+
+            if ($livre_id) {
+                header("Location: details_livre.php?id=$livre_id");
+            } else {
+                header("Location: gestion_commentaire.php?action=liste");
+            }
+            exit();
+        } else {
+            // Pour les requêtes GET, récupérez les détails du commentaire pour les afficher
+            $commentaire = Commentaire::fetchById($this->connection, $id);
+            require 'views/modifier_commentaire.php';
         }
     }
+
+
 
     public function supprimer($id) {
-        if (isset($_GET['livre_id'])) {
-            $livre_id = $_GET['livre_id'];
-
+        if ($id) {
             $commentaireObj = new Commentaire($this->connection, $id);
             $commentaireObj->delete();
-            header("Location: details_livre.php?id=$livre_id");
+            // Redirigez vers la page de liste des commentaires ou une autre page pertinente
+            header("Location: gestion_commentaire.php?action=liste");
             exit(); // Assurez-vous que le script se termine après la redirection
+        } else {
+            // Gérer le cas où l'ID est manquant
+            echo "Erreur : L'ID du commentaire est manquant.";
         }
     }
+
+
 }
 ?>
