@@ -1,7 +1,7 @@
 <?php
-require_once 'models/Livre.php';
-require_once 'models/Auteur.php';
-require_once 'models/Categorie.php';
+require_once '../models/Livre.php';
+require_once '../models/Auteur.php';
+require_once '../models/Categorie.php';
 
 class AjouterLivreController {
     private $connection;

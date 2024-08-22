@@ -1,6 +1,6 @@
 <?php
 // Assurez-vous que session_start() est appelé uniquement une fois, généralement dans un fichier de configuration ou dans header.php
-// session_start(); // À retirer si déjà inclus dans un autre fichier
+ session_start(); // À retirer si déjà inclus dans un autre fichier
 
 // Vérifiez si l'utilisateur est connecté
 if (!isset($_SESSION['utilisateur_id'])) {
@@ -9,8 +9,8 @@ if (!isset($_SESSION['utilisateur_id'])) {
 }
 
 // Inclure le fichier de configuration avec un chemin correct
-require_once 'config.php';
-require_once 'controllers/AjouterLivreController.php';
+require_once '../config.php';
+require_once '../controllers/AjouterLivreController.php';
 
 // Initialiser les messages de succès et d'erreur
 $message_succes = isset($_SESSION['message_succes']) ? $_SESSION['message_succes'] : '';
@@ -47,11 +47,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
     <meta charset="UTF-8">
     <title>Ajouter un livre</title>
-    <link rel="stylesheet" href="public/css/styles.css">
+    <link rel="stylesheet" href="/ProjetBibliothequePHP/public/css/styles.css">
 </head>
 
 <body>
-<?php include 'header.php'; ?>
+<?php include '../header.php'; ?>
 
 <main>
     <div class="container card">
@@ -109,6 +109,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <button type="submit">Ajouter le livre</button>
             </div>
         </form>
+
+        <div class="button-group">
+            <a href="../index.php" class="button">Retour</a>
+        </div>
     </div>
 </main>
 

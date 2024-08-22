@@ -16,13 +16,13 @@ $estSurPageAddLivres = ($pageActuelle === 'ajouter_livre.php');
 
             <!-- Affichez le lien "Tous les Commentaires" si l'utilisateur est administrateur -->
             <?php if ($estAdmin) : ?>
-                <a href="gestion_commentaire.php?action=liste" class="button" <?php if ($estSurPageMesLivres) echo 'style="display:none;"'; ?>>Tous les Commentaires</a>
-                <a href="gestion_livre.php?action=liste" class="button" <?php if ($estSurPageMesLivres) echo 'style="display:none;"'; ?>>Tous les Livres</a>
+                <a href="gestion_commentaire.php?action=liste" class="button" <?php if ($estSurPageMesLivres || $estSurPageAddLivres) echo 'style="display:none;"'; ?>>Tous les Commentaires</a>
+                <a href="gestion_livre.php?action=liste" class="button" <?php if ($estSurPageMesLivres || $estSurPageAddLivres) echo 'style="display:none;"'; ?>>Tous les Livres</a>
             <?php endif; ?>
 
             <!-- Affichez le lien "Mes Livres" ou "Ajouter un Livre" selon la page actuelle -->
             <?php if ($estSurPageAddLivres) : ?>
-                <a href="views/liste_livres_utilisateurs.php" class="button">Mes livres</a>
+                <a href="liste_livres_utilisateurs.php" class="button">Mes livres</a>
             <?php else : ?>
                 <a href="views/liste_livres_utilisateurs.php" class="button" <?php if ($estSurPageMesLivres) echo 'style="display:none;"'; ?>>Mes Livres</a>
             <?php endif; ?>
