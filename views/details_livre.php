@@ -15,6 +15,7 @@
         <section class="book-details">
             <h2><?php echo htmlspecialchars($livre['titre']); ?></h2>
             <p><strong>Auteur:</strong> <?php echo htmlspecialchars($livre['nom'] . ' ' . $livre['prenom']); ?></p>
+            <p><strong>Catégorie:</strong> <?php echo htmlspecialchars($livre['categorie_libelle']); ?></p> <!-- Affichage de la catégorie -->
             <p><strong>Description:</strong> <?php echo nl2br(htmlspecialchars($livre['description'])); ?></p>
         </section>
 

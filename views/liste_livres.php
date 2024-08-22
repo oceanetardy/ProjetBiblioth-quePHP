@@ -35,6 +35,7 @@ $listeLivres = $livre->getAllLivres();
                         <th>Auteur</th>
                         <th>Description</th>
                         <th>Année de Publication</th> 
+                        <th>Catégorie</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -43,7 +44,8 @@ $listeLivres = $livre->getAllLivres();
                             <td><a href="../details_livre.php?livreId=<?php echo htmlspecialchars($livre['id']); ?>"><?php echo htmlspecialchars($livre['titre']); ?></a></td>
                             <td><?php echo htmlspecialchars($livre['nom']) . ' ' . htmlspecialchars($livre['prenom']); ?></td>
                             <td><?php echo htmlspecialchars($livre['description']); ?></td>
-                            <td><?php echo htmlspecialchars($livre['annee_publication']); ?></td> 
+                            <td><?php echo htmlspecialchars($livre['annee_publication']); ?></td>
+                            <td><?php echo htmlspecialchars($livre['categorie_libelle']); ?></td>
                         </tr>
                     <?php endforeach; ?>
                 </tbody>

@@ -29,15 +29,36 @@
                     <th>Titre</th>
                     <th>Auteur</th>
                     <th>Description</th>
+                    <th>Année de Publication</th>
+                    <th>Catégorie</th>
                 </tr>
                 </thead>
                 <tbody>
                 <?php foreach ($resultats as $livre) : ?>
                     <tr>
-                        <td><a href="details_livre.php?livreId=<?php echo $livre['id']; ?>"><?php echo $livre['titre']; ?></a></td>
-                        <td><?php echo $livre['nom'] . ' ' . $livre['prenom']; ?></td>
-                        <td><?php echo $livre['description']; ?></td>
+                        <td>
+                            <a href="details_livre.php?livreId=<?php echo isset($livre['id']) ? htmlspecialchars($livre['id']) : '#'; ?>">
+                                <?php echo isset($livre['titre']) ? htmlspecialchars($livre['titre']) : 'Titre non disponible'; ?>
+                            </a>
+                        </td>
+                        <td>
+                            <?php
+                            $nomAuteur = isset($livre['nom']) ? htmlspecialchars($livre['nom']) : 'Nom inconnu';
+                            $prenomAuteur = isset($livre['prenom']) ? htmlspecialchars($livre['prenom']) : 'Prénom inconnu';
+                            echo $nomAuteur . ' ' . $prenomAuteur;
+                            ?>
+                        </td>
+                        <td>
+                            <?php echo isset($livre['description']) ? htmlspecialchars($livre['description']) : 'Description non disponible'; ?>
+                        </td>
+                        <td>
+                            <?php echo isset($livre['annee_publication']) ? htmlspecialchars($livre['annee_publication']) : 'Année non définie'; ?>
+                        </td>
+                        <td>
+                            <?php echo isset($livre['categorie_libelle']) ? htmlspecialchars($livre['categorie_libelle']) : 'Catégorie non définie'; ?>
+                        </td>
                     </tr>
+
                 <?php endforeach; ?>
                 </tbody>
             </table>

@@ -24,7 +24,7 @@ class Livre
 
     public function getDetailsLivre($livreId)
     {
-        $query = "SELECT l.*, a.nom, a.prenom, ca.libelle FROM livres l
+        $query = "SELECT l.*, a.nom, a.prenom, ca.libelle AS categorie_libelle FROM livres l
               INNER JOIN auteurs a ON l.auteur_id = a.id
               INNER JOIN categories ca ON ca.id = l.categorie_id
               WHERE l.id = :livreId";
@@ -61,13 +61,13 @@ class Livre
     }
 
     public function rechercherLivres($recherche) {
-        $query = "SELECT livres.*, auteurs.nom, auteurs.prenom, categories.libelle 
-                  FROM livres              
-                  INNER JOIN auteurs ON livres.auteur_id = auteurs.id
-                  INNER JOIN categories ON livres.categorie_id = categories.id
-                  WHERE titre LIKE :recherche 
-                  OR auteurs.nom LIKE :recherche 
-                  OR auteurs.prenom LIKE :recherche";
+        $query = "SELECT livres.*, auteurs.nom, auteurs.prenom, categories.libelle AS categorie_libelle 
+              FROM livres              
+              INNER JOIN auteurs ON livres.auteur_id = auteurs.id
+              INNER JOIN categories ON livres.categorie_id = categories.id
+              WHERE livres.titre LIKE :recherche 
+              OR auteurs.nom LIKE :recherche 
+              OR auteurs.prenom LIKE :recherche";
         $statement = $this->connection->prepare($query);
         $recherche = '%' . $recherche . '%';
         $statement->bindParam(':recherche', $recherche, PDO::PARAM_STR);
@@ -75,6 +75,7 @@ class Livre
 
         return $statement->fetchAll();
     }
+
 
     public function getCommentairesLivre($livreId)
     {

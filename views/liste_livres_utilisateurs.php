@@ -33,7 +33,8 @@ $listeLivres = $livre->getLivresUtilisateur($_SESSION['utilisateur_id']);
                         <th>Titre</th>
                         <th>Auteur</th>
                         <th>Description</th>
-                        <th>Année de Publication</th> <!-- Nouvelle colonne -->
+                        <th>Année de Publication</th>
+                        <th>Catégorie</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -43,6 +44,7 @@ $listeLivres = $livre->getLivresUtilisateur($_SESSION['utilisateur_id']);
                             <td><?php echo htmlspecialchars($livre['nom_auteur']) . ' ' . htmlspecialchars($livre['prenom_auteur']); ?></td>
                             <td><?php echo htmlspecialchars($livre['description']); ?></td>
                             <td><?php echo htmlspecialchars($livre['annee_publication']); ?></td> <!-- Nouvelle donnée -->
+                            <td><?php echo htmlspecialchars($livre['categorie_libelle']); ?></td>
                         </tr>
                     <?php endforeach; ?>
                 </tbody>
