@@ -32,14 +32,15 @@
             <tbody>
             <?php foreach ($livres as $livre): ?>
                 <tr>
-                    <td><a href="gestion_livre.php?action=details&id=<?php echo $livre['id']; ?>"><?php echo htmlspecialchars($livre['titre']); ?></a></td>
+                    <td><?php echo htmlspecialchars($livre['titre']); ?></td>
                     <td><?php echo htmlspecialchars($livre['nom_auteur']) . ' ' . htmlspecialchars($livre['prenom_auteur']); ?></td>
                     <td><?php echo htmlspecialchars($livre['annee_publication']); ?></td>
                     <td><?php echo htmlspecialchars($livre['description']); ?></td>
                     <td><?php echo htmlspecialchars($livre['categorie_libelle']); ?></td>
                     <td>
+                        <a href="gestion_livre.php?action=details&id=<?php echo $livre['id']; ?>">Détails</a>
                         <a href="gestion_livre.php?action=modifier&id=<?php echo $livre['id']; ?>">Modifier</a>
-                        <a href="gestion_livre.php?action=supprimer&id=<?php echo $livre['id']; ?>" onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce livre ?');">Supprimer</a>
+                        <a href="gestion_livre.php?action=supprimer&id=<?php echo $livre['id']; ?>" onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce livre?');">Supprimer</a>
                     </td>
                 </tr>
             <?php endforeach; ?>
@@ -47,8 +48,6 @@
         </table>
 </main>
 
-<footer>
-    <?php include 'footer.php'; ?>
-</footer>
+<?php include 'footer.php'; ?>
 </body>
 </html>

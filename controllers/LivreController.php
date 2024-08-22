@@ -3,17 +3,15 @@ require_once 'models/Livre.php';
 require_once 'models/Auteur.php';
 require_once 'models/Categorie.php';
 
-require_once 'models/Livre.php';
-require_once 'models/Auteur.php';
-require_once 'models/Categorie.php';
-
 class LivreController {
     private $connection;
     private $livre;
+    private $categorie;
 
     public function __construct($connection) {
         $this->connection = $connection;
         $this->livre = new Livre($connection);
+        $this->categorie = new Categorie($connection);
     }
 
     public function liste() {
@@ -44,26 +42,34 @@ class LivreController {
             $auteurExiste = $auteur->getAuteurByNomPrenom($nomAuteur, $prenomAuteur);
             $auteurId = $auteurExiste ? $auteurExiste['id'] : $auteur->ajouterAuteur($nomAuteur, $prenomAuteur);
 
-            $livreObj = new Livre($this->connection);
-            $livreObj->modifierLivre($id, $titre, $auteurId, $annee_publication, $description, $categorieId);
+            try {
+                $this->livre->modifierLivre($id, $titre, $auteurId, $annee_publication, $description, $categorieId);
 
-            $_SESSION['message'] = [
-                'type' => 'success',
-                'text' => 'Livre modifié avec succès!'
-            ];
-            header("Location: gestion_livre.php?action=liste");
-            exit();
+                $_SESSION['message'] = [
+                    'type' => 'success',
+                    'text' => 'Livre modifié avec succès!'
+                ];
+                header("Location: gestion_livre.php?action=liste");
+                exit();
+            } catch (PDOException $e) {
+                $_SESSION['message'] = [
+                    'type' => 'error',
+                    'text' => 'Erreur lors de la modification du livre : ' . $e->getMessage()
+                ];
+                header("Location: gestion_livre.php?action=modifier&id=$id");
+                exit();
+            }
         } else {
             // Pour les requêtes GET, récupérez les détails du livre pour les afficher
             $livre = $this->livre->getDetailsLivre($id);
+            $categories = $this->categorie->getAllCategories(); // Récupère toutes les catégories
             require 'views/modifier_livre.php';
         }
     }
 
     public function supprimer($id) {
         if ($id) {
-            $livreObj = new Livre($this->connection);
-            if ($livreObj->delete($id)) {
+            if ($this->livre->delete($id)) {
                 $_SESSION['message'] = [
                     'type' => 'success',
                     'text' => 'Livre supprimé avec succès!'
@@ -77,14 +83,13 @@ class LivreController {
             header("Location: gestion_livre.php?action=liste");
             exit();
         } else {
-            // Gérer le cas où l'ID est manquant
             echo "Erreur : L'ID du livre est manquant.";
         }
     }
 
     public function details($id) {
         $livre = $this->livre->getDetailsLivre($id);
-        require '../views/details_livre.php'; // Affiche les détails du livre
+        require 'views/details_livre.php'; // Affiche les détails du livre
     }
 }
 ?>

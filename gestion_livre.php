@@ -3,33 +3,30 @@ session_start();
 require_once 'config.php';
 require_once 'controllers/LivreController.php';
 
-// Récupération des paramètres de la requête
-$action = isset($_GET['action']) ? $_GET['action'] : null;
-$id = isset($_GET['id']) ? intval($_GET['id']) : null;
+$livreController = new LivreController($connection);
 
-// Déterminer quel contrôleur utiliser
-$controller = new LivreController($connection);
+$action = isset($_GET['action']) ? $_GET['action'] : 'liste';
+$id = isset($_GET['id']) ? $_GET['id'] : null;
 
 switch ($action) {
     case 'modifier':
         if ($id) {
-            $controller->modifier($id);
+            $livreController->modifier($id);
         }
         break;
     case 'supprimer':
-        if ($_SERVER['REQUEST_METHOD'] === 'GET' && $id) {
-            $controller->supprimer($id);
+        if ($id) {
+            $livreController->supprimer($id);
         }
         break;
     case 'details':
         if ($id) {
-            $controller->details($id);
+            $livreController->details($id);
         }
         break;
     case 'liste':
     default:
-        // Afficher tous les livres
-        $controller->liste();
+        $livreController->liste();
         break;
 }
 ?>
