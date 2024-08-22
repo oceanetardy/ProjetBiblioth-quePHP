@@ -22,6 +22,7 @@ class Livre
         return $this->connection->lastInsertId();
     }
 
+
     public function getDetailsLivre($livreId)
     {
         $query = "SELECT l.*, a.nom, a.prenom, ca.libelle AS categorie_libelle FROM livres l
@@ -49,15 +50,15 @@ class Livre
         return $statement->fetchAll();
     }
 
-    public function getAllLivres()
-    {
-        $query = "SELECT l.*, a.nom, a.prenom, cat.id AS categorie_id, cat.libelle AS categorie_libelle FROM livres l
+    public function getAllLivres() {
+        $query = "SELECT l.id, l.titre, a.nom AS nom_auteur, a.prenom AS prenom_auteur, l.annee_publication, l.description, cat.libelle AS categorie_libelle
+              FROM livres l
               INNER JOIN auteurs a ON l.auteur_id = a.id
               INNER JOIN categories cat ON l.categorie_id = cat.id";
         $statement = $this->connection->prepare($query);
         $statement->execute();
 
-        return $statement->fetchAll();
+        return $statement->fetchAll(PDO::FETCH_ASSOC);
     }
 
     public function rechercherLivres($recherche) {
@@ -76,6 +77,12 @@ class Livre
         return $statement->fetchAll();
     }
 
+    public function delete($id) {
+        $query = "DELETE FROM livres WHERE id = :id";
+        $statement = $this->connection->prepare($query);
+        $statement->bindParam(':id', $id, PDO::PARAM_INT);
+        return $statement->execute();
+    }
 
     public function getCommentairesLivre($livreId)
     {

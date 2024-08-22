@@ -1,7 +1,7 @@
 <?php
-require_once '../models/Livre.php';
-require_once '../models/Auteur.php';
-require_once '../models/Categorie.php';
+require_once 'models/Livre.php';
+require_once 'models/Auteur.php';
+require_once 'models/Categorie.php';
 
 class AjouterLivreController {
     private $connection;
@@ -32,6 +32,12 @@ class AjouterLivreController {
         } else {
             // L'auteur existe déjà, on récupère son ID
             $auteurId = $auteurExiste['id'];
+        }
+
+        // Vérifier si la catégorie est valide
+        if (empty($categorieId)) {
+            $_SESSION['message_erreur'] = 'La catégorie sélectionnée est invalide.';
+            return;
         }
 
         // Insertion du livre dans la base de données
