@@ -89,5 +89,29 @@ class Livre
         return $statement->fetchAll();
     }
 
+
+    public function rechercherLivres($recherche)
+    {
+        // Assurer que $recherche est sécurisé
+        $recherche = '%' . $recherche . '%';
+
+        // Query SQL pour rechercher par titre ou auteur
+        $query = "SELECT l.id, l.titre, a.nom AS nom, a.prenom AS prenom, l.annee_publication, 
+                     l.description, cat.libelle AS categorie_libelle
+              FROM livres l
+              INNER JOIN auteurs a ON l.auteur_id = a.id
+              INNER JOIN categories cat ON l.categorie_id = cat.id
+              WHERE l.titre LIKE :recherche
+                 OR a.nom LIKE :recherche
+                 OR a.prenom LIKE :recherche";
+
+        $statement = $this->connection->prepare($query);
+        $statement->bindParam(':recherche', $recherche, PDO::PARAM_STR);
+        $statement->execute();
+
+        return $statement->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+
 }
 ?>
