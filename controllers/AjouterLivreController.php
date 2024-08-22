@@ -1,19 +1,23 @@
 <?php
 require_once '../models/Livre.php';
 require_once '../models/Auteur.php';
+require_once '../models/Categorie.php';
 
 class AjouterLivreController {
     private $connection;
     private $livre;
     private $auteur;
+    private $categorie;
 
     public function __construct($connection) {
         $this->connection = $connection;
         $this->livre = new Livre($connection);
         $this->auteur = new Auteur($connection);
+        $this->categorie = new Categorie($connection);
     }
 
-    public function handleAjouterLivre($titre, $nomAuteur, $prenomAuteur, $annee_publication, $description, $utilisateurId) {
+    public function handleAjouterLivre($titre, $nomAuteur, $prenomAuteur, $annee_publication, $description, $utilisateurId, $categorieId)
+    {
         if (empty($nomAuteur) || empty($prenomAuteur)) {
             $_SESSION['message_erreur'] = 'Veuillez saisir le nom et le prénom de l\'auteur.';
             return;
@@ -31,7 +35,7 @@ class AjouterLivreController {
         }
 
         // Insertion du livre dans la base de données
-        $ajoutLivre = $this->livre->ajouterLivre($titre, $auteurId, $annee_publication, $description, $utilisateurId);
+        $ajoutLivre = $this->livre->ajouterLivre($titre, $auteurId, $annee_publication, $description, $utilisateurId, $categorieId);
 
         if ($ajoutLivre) {
             $_SESSION['message_succes'] = 'Livre ajouté avec succès!';
@@ -43,7 +47,9 @@ class AjouterLivreController {
     }
 
     public function getViewData() {
-        return [];
+        $categories = $this->categorie->getAllCategories();
+        return [
+            'categories' => $categories
+        ];
     }
 }
-?>
