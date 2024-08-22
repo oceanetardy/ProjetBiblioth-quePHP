@@ -56,11 +56,11 @@ class Livre
 
     public function getAllLivres()
     {
-        $query = "SELECT l.id, l.titre, a.nom AS nom_auteur, a.prenom AS prenom_auteur, l.annee_publication, 
-                         l.description, cat.libelle AS categorie_libelle
-                  FROM livres l
-                  INNER JOIN auteurs a ON l.auteur_id = a.id
-                  INNER JOIN categories cat ON l.categorie_id = cat.id";
+        $query = "SELECT l.id, l.titre, a.nom AS nom, a.prenom AS prenom, l.annee_publication, 
+                     l.description, cat.libelle AS categorie_libelle
+              FROM livres l
+              INNER JOIN auteurs a ON l.auteur_id = a.id
+              INNER JOIN categories cat ON l.categorie_id = cat.id";
         $statement = $this->connection->prepare($query);
         $statement->execute();
 
