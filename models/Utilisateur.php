@@ -57,5 +57,23 @@ class Utilisateur
 
         return false;
     }
+    public function updateUtilisateur($id, $nom_utilisateur, $email, $mot_de_passe = null)
+    {
+        if ($mot_de_passe) {
+            $hashedPassword = password_hash($mot_de_passe, PASSWORD_DEFAULT);
+            $query = "UPDATE utilisateurs SET nom_utilisateur = :nom_utilisateur, email = :email, mot_de_passe = :mot_de_passe WHERE id = :id";
+            $statement = $this->connection->prepare($query);
+            $statement->bindParam(':mot_de_passe', $hashedPassword, PDO::PARAM_STR);
+        } else {
+            $query = "UPDATE utilisateurs SET nom_utilisateur = :nom_utilisateur, email = :email WHERE id = :id";
+            $statement = $this->connection->prepare($query);
+        }
+        $statement->bindParam(':nom_utilisateur', $nom_utilisateur, PDO::PARAM_STR);
+        $statement->bindParam(':email', $email, PDO::PARAM_STR);
+        $statement->bindParam(':id', $id, PDO::PARAM_INT);
+        return $statement->execute();
+    }
+
+
 }
 ?>
