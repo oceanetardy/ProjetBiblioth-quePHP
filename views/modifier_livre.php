@@ -1,6 +1,4 @@
 <?php
-// Assurez-vous que session_start() est appelé uniquement une fois, généralement dans un fichier de configuration ou dans header.php
-// session_start(); // À retirer si déjà inclus dans un autre fichier
 
 // Vérifiez si l'utilisateur est connecté
 if (!isset($_SESSION['utilisateur_id'])) {
@@ -8,16 +6,28 @@ if (!isset($_SESSION['utilisateur_id'])) {
     exit();
 }
 
-// Inclure le fichier de configuration avec un chemin correct
-require_once 'config.php';
+// Inclure le fichier de configuration qui initialise la connexion
+require_once 'config.php';  // Assurez-vous que le chemin est correct
+
 require_once 'controllers/AjouterLivreController.php';
+require_once 'models/Livre.php';  // Assurez-vous que le modèle est inclus
 
-// Initialiser les messages de succès et d'erreur
-$message_succes = isset($_SESSION['message_succes']) ? $_SESSION['message_succes'] : '';
-$message_erreur = isset($_SESSION['message_erreur']) ? $_SESSION['message_erreur'] : '';
+$livreId = $_GET['id'];
 
-unset($_SESSION['message_succes']);
-unset($_SESSION['message_erreur']);
+if (!$livreId) {
+    $_SESSION['message_erreur'] = "ID du livre manquant.";
+    header('Location: gestion_livres.php');
+    exit();
+}
+
+// Charger les données du livre à modifier
+$livre = (new Livre($connection))->getDetailsLivre($livreId);
+
+if (!$livre) {
+    $_SESSION['message_erreur'] = "Livre introuvable.";
+    header('Location: gestion_livres.php');
+    exit();
+}
 
 // Charger les catégories disponibles
 $controller = new AjouterLivreController($connection);
@@ -36,85 +46,68 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $controller->handleAjouterLivre($titre, $nomAuteur, $prenomAuteur, $annee_publication, $description, $utilisateurId, $categorieId);
 
     // Redirection pour éviter la soumission multiple du formulaire
-    header('Location: ajouter_livre.php');
+    header('Location: modifier_livre.php?id=' . $livreId);
     exit();
 }
 ?>
 
 <!DOCTYPE html>
 <html lang="fr">
-
 <head>
     <meta charset="UTF-8">
-    <title>Ajouter un livre</title>
-    <link rel="stylesheet" href="public/css/styles.css">
+    <title>Modifier le livre</title>
+    <link rel="stylesheet" href="/ProjetBibliothequePHP/public/css/styles.css">
 </head>
-
 <body>
 <?php include 'header.php'; ?>
-
 <main>
-    <div class="container card">
-        <h1>Ajouter un livre</h1>
-
-        <?php if ($message_succes) : ?>
-            <div class="alert success" id="success-message">
-                <?php echo htmlspecialchars($message_succes); ?>
-            </div>
-        <?php endif; ?>
-        <?php if ($message_erreur) : ?>
-            <div class="alert error" id="error-message">
-                <?php echo htmlspecialchars($message_erreur); ?>
-            </div>
-        <?php endif; ?>
-
-        <form method="POST" action="ajouter_livre.php">
+    <h1>Modifier le livre</h1>
+    <section class="card">
+        <form method="POST" action="modifier_livre.php?id=<?= htmlspecialchars($livreId) ?>">
             <div class="form-group">
                 <label for="titre">Titre:</label>
-                <input type="text" name="titre" required>
+                <input type="text" name="titre" value="<?= htmlspecialchars($livre['titre']) ?>" required>
             </div>
 
             <div class="form-group">
                 <label for="nomAuteur">Nom de l'auteur:</label>
-                <input type="text" name="nomAuteur" required>
+                <input type="text" name="nomAuteur" value="<?= htmlspecialchars($livre['nom']) ?>" required>
             </div>
 
             <div class="form-group">
                 <label for="prenomAuteur">Prénom de l'auteur:</label>
-                <input type="text" name="prenomAuteur" required>
+                <input type="text" name="prenomAuteur" value="<?= htmlspecialchars($livre['prenom']) ?>" required>
             </div>
 
             <div class="form-group">
                 <label for="annee_publication">Année de publication:</label>
-                <input type="number" name="annee_publication" required>
+                <input type="number" name="annee_publication" value="<?= htmlspecialchars($livre['annee_publication']) ?>" required>
             </div>
 
             <div class="form-group">
                 <label for="description">Description:</label>
-                <textarea name="description" required></textarea>
+                <textarea name="description" required><?= htmlspecialchars($livre['description']) ?></textarea>
             </div>
 
             <div class="form-group">
                 <label for="categorie_id">Catégorie:</label>
                 <select name="categorie_id" required>
                     <?php foreach ($categories as $categorie) : ?>
-                        <option value="<?php echo htmlspecialchars($categorie['id']); ?>">
-                            <?php echo htmlspecialchars($categorie['libelle']); ?>
+                        <option value="<?= htmlspecialchars($categorie['id']); ?>" <?= $livre['categorie_id'] == $categorie['id'] ? 'selected' : ''; ?>>
+                            <?= htmlspecialchars($categorie['libelle']); ?>
                         </option>
                     <?php endforeach; ?>
                 </select>
             </div>
 
             <div class="form-group">
-                <button type="submit">Ajouter le livre</button>
+                <button type="submit">Modifier Livre</button>
             </div>
         </form>
-    </div>
+    </section>
 </main>
-
 <footer>
     <?php include 'footer.php'; ?>
 </footer>
 </body>
-
 </html>

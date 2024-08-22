@@ -14,7 +14,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $description = $_POST['description'];
     $annee_publication = $_POST['annee_publication'];
     $utilisateurId = $_SESSION['utilisateur_id'];
-    $categorie_libelle = $_SESSION['categorie_libelle'];
+    $categorie_libelle = $_POST['categorie_libelle'];
 
     $controller->handleAjouterLivre($titre, $nomAuteur, $prenomAuteur, $annee_publication, $description, $utilisateurId, $categorie_libelle);
 }

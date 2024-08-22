@@ -10,7 +10,7 @@ $livre_id = isset($livre_id) ? htmlspecialchars($livre_id) : '';
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Détails du Livre</title>
+    <title>Modifier le commentaire</title>
     <link rel="stylesheet" href="/ProjetBibliothequePHP/public/css/styles.css">
 </head>
 <body>
