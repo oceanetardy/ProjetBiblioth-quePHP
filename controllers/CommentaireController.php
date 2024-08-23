@@ -11,7 +11,12 @@ class CommentaireController {
 
     public function liste() {
         // Récupère tous les commentaires
-        $query = "SELECT * FROM commentaires";
+        $query = "
+            SELECT c.id, c.livre_id, c.contenu, l.titre AS titre, u.nom_utilisateur AS nom_utilisateur
+            FROM commentaires c
+            INNER JOIN utilisateurs u ON u.id = c.utilisateur_id
+            INNER JOIN livres l ON l.utilisateur_id=c.utilisateur_id
+            ";
         $statement = $this->connection->prepare($query);
         $statement->execute();
         $commentaires = $statement->fetchAll(PDO::FETCH_ASSOC);

@@ -15,19 +15,17 @@
     <table>
         <thead>
         <tr>
-            <th>ID</th>
-            <th>Livres ID</th>
-            <th>Utilisateur ID</th>
-            <th>Contenu</th>
+            <th>Titre livre</th>
+            <th>Utilisateur</th>
+            <th>Commentaire</th>
             <th>Actions</th>
         </tr>
         </thead>
         <tbody>
         <?php foreach ($commentaires as $commentaire) : ?>
             <tr>
-                <td><?php echo htmlspecialchars($commentaire['id']); ?></td>
-                <td><?php echo htmlspecialchars($commentaire['livre_id']); ?></td>
-                <td><?php echo htmlspecialchars($commentaire['utilisateur_id']); ?></td>
+                <td><?php echo htmlspecialchars($commentaire['titre']); ?></td>
+                <td><?php echo htmlspecialchars($commentaire['nom_utilisateur']); ?></td>
                 <td><?php echo htmlspecialchars($commentaire['contenu']); ?></td>
                 <td>
                     <a href="gestion_commentaire.php?action=modifier&id=<?php echo htmlspecialchars($commentaire['id']); ?>">Modifier</a>

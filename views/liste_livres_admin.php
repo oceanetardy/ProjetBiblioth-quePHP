@@ -11,12 +11,6 @@
 <main>
         <h1>Liste des livres</h1>
 
-        <?php if (isset($_SESSION['message'])): ?>
-            <div class="alert <?php echo $_SESSION['message']['type']; ?>">
-                <?php echo htmlspecialchars($_SESSION['message']['text']); ?>
-            </div>
-            <?php unset($_SESSION['message']); ?>
-        <?php endif; ?>
 
         <table>
             <thead>
