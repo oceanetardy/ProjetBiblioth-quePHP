@@ -7,7 +7,7 @@ $controller = new InscriptionController($connection);
 
 // Gestion de la requête d'inscription
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $controller->handleInscription($_POST['nom_utilisateur'], $_POST['email'], $_POST['mot_de_passe']);
+    $controller->inscrire($_POST['nom_utilisateur'], $_POST['email'], $_POST['mot_de_passe']);
 }
 
 // Récupérer et supprimer le message de la session
