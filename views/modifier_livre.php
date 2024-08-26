@@ -12,12 +12,7 @@
     <div class="container card">
         <h1>Modifier un livre</h1>
 
-        <?php if (isset($_SESSION['message'])): ?>
-            <div class="alert <?php echo $_SESSION['message']['type']; ?>">
-                <?php echo htmlspecialchars($_SESSION['message']['text']); ?>
-            </div>
-            <?php unset($_SESSION['message']); ?>
-        <?php endif; ?>
+
 
         <form method="POST" action="gestion_livre.php?action=modifier&id=<?php echo $livre['id']; ?>">
             <div class="form-group">

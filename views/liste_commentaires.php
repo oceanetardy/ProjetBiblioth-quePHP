@@ -35,6 +35,10 @@
         <?php endforeach; ?>
         </tbody>
     </table>
+
+    <div class="button-group">
+        <a href="index.php" class="button">Retour</a>
+    </div>
 </main>
 </body>
 </html>
