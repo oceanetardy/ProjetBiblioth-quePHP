@@ -17,7 +17,11 @@ $estSurPageSearchLivre = ($pageActuelle === 'recherche_livres.php');
     <h1>BOOKNET</h1>
     <div class="auth-buttons">
         <?php if ($utilisateurConnecte) : ?>
+        <?php if ($estSurPageMesLivres || $estSurPageAllLivres || $estSurPageMyInfos) : ?>
             <a href="../logout.php" class="button">Déconnexion</a>
+        <?php else : ?>
+                <a href="logout.php" class="button">Déconnexion</a>
+            <?php endif ?>
 
             <!-- Affichez le lien "Tous les Commentaires" si l'utilisateur est administrateur -->
             <?php if ($estAdmin) : ?>
