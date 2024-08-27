@@ -17,7 +17,7 @@ $estSurPageSearchLivre = ($pageActuelle === 'recherche_livres.php');
     <h1>BOOKNET</h1>
     <div class="auth-buttons">
         <?php if ($utilisateurConnecte) : ?>
-        <?php if ($estSurPageMesLivres || $estSurPageAllLivres || $estSurPageMyInfos) : ?>
+        <?php if ($estSurPageMesLivres || $estSurPageAllLivres || $estSurPageMyInfos || $estSurPageAddLivres) : ?>
             <a href="../logout.php" class="button">Déconnexion</a>
         <?php else : ?>
                 <a href="logout.php" class="button">Déconnexion</a>
@@ -25,19 +25,15 @@ $estSurPageSearchLivre = ($pageActuelle === 'recherche_livres.php');
 
             <!-- Affichez le lien "Tous les Commentaires" si l'utilisateur est administrateur -->
             <?php if ($estAdmin) : ?>
-                <a href="gestion_commentaire.php?action=liste" class="button" <?php if ($estSurPageMesLivres || $estSurPageAddLivres || $estSurPageMyInfos || $estSurPageAllLivres || $estSurPageAllComment || $estSurPageAllLivresAdmin || $estSurPageSearchLivre) echo 'style="display:none;"'; ?>>Tous les Commentaires</a>
+                <a href="gestion_commentaire.php?action=liste" class="button" <?php if ($estSurPageMesLivres || $estSurPageAddLivres || $estSurPageMyInfos || $estSurPageAllLivres || $estSurPageAllComment || $estSurPageAllLivresAdmin || $estSurPageSearchLivre ) echo 'style="display:none;"'; ?>>Tous les Commentaires</a>
                 <a href="gestion_livre.php?action=liste" class="button" <?php if ($estSurPageMesLivres || $estSurPageAddLivres || $estSurPageMyInfos || $estSurPageAllLivres || $estSurPageAllComment || $estSurPageAllLivresAdmin || $estSurPageSearchLivre) echo 'style="display:none;"'; ?>>Tous les Livres</a>
             <?php endif; ?>
 
             <!-- Affichez le lien "Mes Livres" ou "Ajouter un Livre" selon la page actuelle -->
-            <?php if ($estSurPageAddLivres) : ?>
-                <a href="liste_livres_utilisateurs.php" class="button">Mes livres</a>
-            <?php else : ?>
-                <a href="views/liste_livres_utilisateurs.php" class="button" <?php if ($estSurPageMesLivres || $estSurPageMyInfos || $estSurPageAllLivres || $estSurPageAllComment || $estSurPageAllLivresAdmin || $estSurPageSearchLivre) echo 'style="display:none;"'; ?>>Mes Livres</a>
-            <?php endif; ?>
+                <a href="views/liste_livres_utilisateurs.php" class="button" <?php if ($estSurPageAddLivres ||  $estSurPageMesLivres || $estSurPageMyInfos || $estSurPageAllLivres || $estSurPageAllComment || $estSurPageAllLivresAdmin || $estSurPageSearchLivre) echo 'style="display:none;"'; ?>>Mes Livres</a>
 
             <!-- Ajoutez le lien "Mes Infos" -->
-            <a href="views/modifier_infos.php" class="button" <?php if ($estSurPageMesLivres || $estSurPageMyInfos || $estSurPageAllLivres || $estSurPageAllComment || $estSurPageAllLivresAdmin || $estSurPageSearchLivre) echo 'style="display:none;"'; ?>>Mes Infos</a>
+            <a href="views/modifier_infos.php" class="button" <?php if ($estSurPageMesLivres || $estSurPageMyInfos || $estSurPageAllLivres || $estSurPageAllComment || $estSurPageAllLivresAdmin || $estSurPageSearchLivre || $estSurPageAddLivres) echo 'style="display:none;"'; ?>>Mes Infos</a>
 
         <?php else : ?>
             <a href="login.php" class="button">Se connecter</a>

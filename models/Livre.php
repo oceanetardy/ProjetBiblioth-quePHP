@@ -92,6 +92,11 @@ class Livre
 
     public function delete($id)
     {
+        $queryCommentaires = "DELETE FROM commentaires WHERE livre_id = :id";
+        $statementCommentaires = $this->connection->prepare($queryCommentaires);
+        $statementCommentaires->bindParam(':id', $id, PDO::PARAM_INT);
+        $statementCommentaires->execute();
+
         $query = "DELETE FROM livres WHERE id = :id";
         $statement = $this->connection->prepare($query);
         $statement->bindParam(':id', $id, PDO::PARAM_INT);

@@ -201,7 +201,8 @@ footer {
 .user-info input[type="password"],
 .card input[type="text"],
 .card input[type="email"],
-.card input[type="password"],
+input[type="password"],
+.card input[type="number"],
 .card textarea,
 .card select{
     padding: 10px;
