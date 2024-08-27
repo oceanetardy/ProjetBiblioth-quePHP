@@ -1,6 +1,6 @@
 <?php
 require_once 'models/Commentaire.php';
-require_once 'config.php'; // Assurez-vous que cette ligne inclut la connexion PDO
+require_once 'config.php';
 
 class CommentaireController {
     private $connection;
@@ -12,11 +12,11 @@ class CommentaireController {
     public function liste() {
         // Récupère tous les commentaires
         $query = "
-            SELECT c.id, c.livre_id, c.contenu, l.titre AS titre, u.nom_utilisateur AS nom_utilisateur
-            FROM commentaires c
-            INNER JOIN utilisateurs u ON u.id = c.utilisateur_id
-            INNER JOIN livres l ON l.utilisateur_id=c.utilisateur_id
-            ";
+                SELECT  c.id, c.livre_id AS livre_id, c.contenu, l.titre, u.nom_utilisateur AS nom_utilisateur
+                FROM commentaires c
+                LEFT JOIN utilisateurs u ON u.id = c.utilisateur_id
+                LEFT JOIN livres l ON l.id = c.livre_id;
+";
         $statement = $this->connection->prepare($query);
         $statement->execute();
         $commentaires = $statement->fetchAll(PDO::FETCH_ASSOC);
@@ -32,7 +32,7 @@ class CommentaireController {
             $commentaireObj = new Commentaire($this->connection, null, $livre_id, $utilisateur_id, $contenu);
             $commentaireObj->add();
             header("Location: details_livre.php?id=$livre_id");
-            exit(); // Assurez-vous que le script se termine après la redirection
+            exit();
         }
     }
 

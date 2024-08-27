@@ -24,7 +24,7 @@
         <tbody>
         <?php foreach ($commentaires as $commentaire) : ?>
             <tr>
-                <td><?php echo htmlspecialchars($commentaire['titre']); ?></td>
+                <td><a href="details_livre.php?livreId=<?php echo htmlspecialchars($commentaire['livre_id']); ?>"><?php echo htmlspecialchars($commentaire['titre']); ?></a></td>
                 <td><?php echo htmlspecialchars($commentaire['nom_utilisateur']); ?></td>
                 <td><?php echo htmlspecialchars($commentaire['contenu']); ?></td>
                 <td>
