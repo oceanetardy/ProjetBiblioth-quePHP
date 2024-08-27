@@ -200,7 +200,10 @@ footer {
 .user-info input[type="email"],
 .user-info input[type="password"],
 .card input[type="text"],
-.card textarea {
+.card input[type="email"],
+.card input[type="password"],
+.card textarea,
+.card select{
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
