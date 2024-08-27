@@ -10,9 +10,8 @@ class RechercheLivresController {
         $this->livre = new Livre($connection);
     }
 
-    public function rechercherLivres($recherche) {
-        // Effectuer la recherche des livres par titre ou auteur
-        $resultats = $this->livre->rechercherLivres($recherche);
+    public function rechercherLivres($recherche, $categorie = null) {
+        $resultats = $this->livre->rechercherLivres($recherche, $categorie);
 
         return $resultats;
     }

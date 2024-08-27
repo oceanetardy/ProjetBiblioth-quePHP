@@ -113,23 +113,32 @@ class Livre
     }
 
 
-    public function rechercherLivres($recherche)
+    public function rechercherLivres($recherche, $categorieId = null)
     {
-        // Assurer que $recherche est sécurisé
+        // Sécuriser la recherche en utilisant des wildcards pour le LIKE
         $recherche = '%' . $recherche . '%';
 
-        // Query SQL pour rechercher par titre ou auteur
+        // Construire la requête SQL avec un filtre de catégorie optionnel
         $query = "SELECT l.id, l.titre, a.nom AS nom, a.prenom AS prenom, l.annee_publication, 
-                     l.description, cat.libelle AS categorie_libelle
-              FROM livres l
-              INNER JOIN auteurs a ON l.auteur_id = a.id
-              INNER JOIN categories cat ON l.categorie_id = cat.id
-              WHERE l.titre LIKE :recherche
-                 OR a.nom LIKE :recherche
-                 OR a.prenom LIKE :recherche";
+                         l.description, cat.libelle AS categorie_libelle
+                  FROM livres l
+                  INNER JOIN auteurs a ON l.auteur_id = a.id
+                  INNER JOIN categories cat ON l.categorie_id = cat.id
+                  WHERE (l.titre LIKE :recherche
+                     OR a.nom LIKE :recherche
+                     OR a.prenom LIKE :recherche)";
+
+        if ($categorieId) {
+            $query .= " AND l.categorie_id = :categorieId";
+        }
 
         $statement = $this->connection->prepare($query);
         $statement->bindParam(':recherche', $recherche, PDO::PARAM_STR);
+
+        if ($categorieId) {
+            $statement->bindParam(':categorieId', $categorieId, PDO::PARAM_INT);
+        }
+
         $statement->execute();
 
         return $statement->fetchAll(PDO::FETCH_ASSOC);

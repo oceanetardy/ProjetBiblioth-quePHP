@@ -14,7 +14,17 @@
     <section class="search-section card">
         <h1>Rechercher un livre ou un auteur</h1>
         <form method="POST" action="recherche_livres.php">
-            <input type="text" name="recherche" placeholder="Rechercher par titre ou auteur" required>
+            <input type="text" name="recherche" placeholder="Rechercher par titre ou auteur">
+            <!-- Ajout d'un filtre de catégorie -->
+            <select name="categorie">
+                <option value="">Toutes les catégories</option>
+                <?php foreach ($categories as $categorie) : ?>
+                    <option value="<?php echo htmlspecialchars($categorie['id']); ?>">
+                        <?php echo htmlspecialchars($categorie['libelle']); ?>
+                    </option>
+                <?php endforeach; ?>
+            </select>
+
             <button type="submit">Rechercher</button>
         </form>
     </section>
@@ -22,7 +32,7 @@
     <!-- Résultats de recherche -->
     <section class="results-section">
         <?php if (!empty($resultats)) : ?>
-            <h2>Résultats</h2>
+            <h2>Résultats </h2>
             <table>
                 <thead>
                 <tr>
